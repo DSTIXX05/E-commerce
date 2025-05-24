@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { db } from '../../db/index';
 import { productsTable } from '../../db/productSchema';
 import { eq } from 'drizzle-orm';
+import _ from 'lodash';
 
 export async function listProduct(req: Request, res: Response) {
   try {
@@ -74,7 +75,7 @@ export async function deleteProduct(req: Request, res: Response) {
       .returning();
 
     if (deletedProduct) {
-      res.status(204).send('Deleted Successfully!');
+      res.status(204).send();
     } else {
       res.status(404).send({ message: 'product was not found' });
     }
