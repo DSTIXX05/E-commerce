@@ -9,7 +9,7 @@
     "build": "tsc",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio:pg"
   },
   "author": "",
   "license": "ISC",
@@ -28,7 +28,8 @@
   },
   "devDependencies": {
     "@types/express": "^5.0.2",
+    "@types/lodash": "^4.17.17",
     "@types/pg": "^8.15.2",
-    "drizzle-kit": "^0.18.1"
+    "drizzle-kit": "^0.31.1"
   }
 }
