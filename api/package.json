@@ -9,12 +9,13 @@
     "build": "tsc",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:studio": "drizzle-kit studio:pg"
+    "db:studio": "drizzle-kit studio"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "drizzle-orm": "^0.43.1",
     "drizzle-zod": "^0.8.1",
     "express": "^5.1.0",
@@ -27,6 +28,7 @@
     "zod": "^3.25.23"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/express": "^5.0.2",
     "@types/lodash": "^4.17.17",
     "@types/pg": "^8.15.2",

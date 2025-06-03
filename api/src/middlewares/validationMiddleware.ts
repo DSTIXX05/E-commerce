@@ -10,9 +10,11 @@ export function validateData(schema: z.ZodTypeAny) {
       schema.parse(req.body);
       req.cleanBody = _.pick(
         req.body,
-        createInsertSchema(productsTable).keyof().options
+        schema.keyof().options
+        // req.cleanBody = _.pick(req.body, Object.keys(schema.shape));
       );
       console.log('The cleaned body is:', req.cleanBody);
+      // console.log(createInsertSchema(productsTable).keyof().options);
 
       next();
     } catch (error) {
