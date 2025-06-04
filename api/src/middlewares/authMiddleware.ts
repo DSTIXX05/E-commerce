@@ -51,11 +51,12 @@ export function verifyToken(req: Request, res: Response, next: NextFunction) {
       return res.status(500).json({ error: 'JWT secret not configured' });
     }
 
-    console.log('token', token);
+    // console.log('token', token);
 
     const decoded = jwt.verify(token, jwtSecret);
     // console.log('57 decoded', decoded);
     req.userId = decoded.userId;
+    req.role = decoded.role;
     next();
   } catch (err) {
     return res.status(401).json({ error: 'Invalid token' });
@@ -63,30 +64,14 @@ export function verifyToken(req: Request, res: Response, next: NextFunction) {
 }
 
 export function verifySeller(req: Request, res: Response, next: NextFunction) {
+  const role = req.role;
+
   const authHeader = req.header('Authorization');
 
   const token = authHeader;
 
-  if (!token) {
+  if (role != 'seller') {
     return res.status(401).json({ error: 'Access Denied' });
   }
-
-  try {
-    const jwtSecret = process.env.JWT_SECRET;
-    if (!jwtSecret) {
-      return res.status(500).json({ error: 'JWT secret not configured' });
-    }
-
-    // console.log('token', token);
-
-    const decoded = jwt.verify(token, jwtSecret);
-    if (decoded.role != 'seller') {
-      console.log('84 decoded', decoded);
-      return res.status(401).json({ error: 'You do not have access' });
-    }
-    req.userId = decoded.userId;
-    next();
-  } catch (err) {
-    return res.status(401).json({ error: 'Invalid token' });
-  }
+  next();
 }

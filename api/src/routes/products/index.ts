@@ -41,10 +41,11 @@ router.post(
 router.put(
   '/:id',
   verifyToken,
+  verifySeller,
   validateData(updateProductSchema),
   updateProduct
 );
 
-router.delete('/:id', deleteProduct);
+router.delete('/:id', verifyToken, verifySeller, deleteProduct);
 
 export default router;
