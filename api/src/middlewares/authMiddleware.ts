@@ -1,77 +1,56 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt, { decode } from 'jsonwebtoken';
 
-// export function verifyToken(req: Request, res: Response, next: NextFunction) {
-//   const authHeader = req.header('Authorization');
-//   const token =
-//     authHeader && authHeader.startsWith('Bearer ')
-//       ? authHeader.slice(7)
-//       : undefined;
-
-//   if (!token) {
-//     return res.status(401).json({ error: 'Access Denied' });
-//   }
-
-//   try {
-//     const jwtSecret = process.env.JWT_SECRET;
-//     if (!jwtSecret) {
-//       return res.status(500).json({ error: 'JWT secret not configured' });
-//     }
-
-//     console.log('token', token);
-//     // console.log('jwtsecret', jwtSecret);
-
-//     const decoded = jwt.verify(token, jwtSecret);
-//     // console.log(decoded);
-//     req.userId = decoded.userId;
-//     next();
-//   } catch (err) {
-//     return res.status(401).json({ error: 'Invalid token' });
-//   }
-// }
-
-export function verifyToken(req: Request, res: Response, next: NextFunction) {
+export function verifyToken(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void {
   const authHeader = req.header('Authorization');
-
-  // To use bearer token, use this.
-  // const token =
-  //   authHeader && authHeader.startsWith('Bearer ')
-  //     ? authHeader.slice(7)
-  //     : undefined;
-
-  const token = authHeader;
+  const token =
+    authHeader && authHeader.startsWith('Bearer ')
+      ? authHeader.slice(7)
+      : authHeader;
 
   if (!token) {
-    return res.status(401).json({ error: 'Access Denied' });
+    res.status(401).json({ error: 'Access Denied' });
+    return;
   }
 
   try {
     const jwtSecret = process.env.JWT_SECRET;
     if (!jwtSecret) {
-      return res.status(500).json({ error: 'JWT secret not configured' });
+      res.status(500).json({ error: 'JWT secret not configured' });
+      return;
     }
 
-    // console.log('token', token);
-
     const decoded = jwt.verify(token, jwtSecret);
-    // console.log('57 decoded', decoded);
-    req.userId = decoded.userId;
-    req.role = decoded.role;
-    next();
+    if (
+      typeof decoded === 'object' &&
+      decoded !== null &&
+      'userId' in decoded &&
+      'role' in decoded
+    ) {
+      req.userId = (decoded as any).userId;
+      req.role = (decoded as any).role;
+      next();
+    } else {
+      res.status(401).json({ error: 'Invalid token payload' });
+    }
   } catch (err) {
-    return res.status(401).json({ error: 'Invalid token' });
+    res.status(401).json({ error: 'Invalid token' });
   }
 }
 
-export function verifySeller(req: Request, res: Response, next: NextFunction) {
+export function verifySeller(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void {
   const role = req.role;
-
-  const authHeader = req.header('Authorization');
-
-  const token = authHeader;
-
   if (role != 'seller') {
-    return res.status(401).json({ error: 'Access Denied' });
+    res.status(403).json({ error: 'Access Denied: Seller only' });
+    return;
   }
   next();
 }
