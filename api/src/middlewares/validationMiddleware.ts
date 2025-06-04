@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { z, ZodError } from 'zod';
 import _ from 'lodash';
 import { createInsertSchema } from 'drizzle-zod';
-import { productsTable } from '../db/productSchema';
+import { productsTable } from '../db/productSchema.js';
 
 export function validateData(schema: z.ZodTypeAny) {
   return (req: Request, res: Response, next: NextFunction) => {

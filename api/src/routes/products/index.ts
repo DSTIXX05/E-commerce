@@ -8,15 +8,15 @@ import {
   createProduct,
   updateProduct,
   deleteProduct,
-} from './productsController';
+} from './productsController.js';
 
-import { validateData } from '../../middlewares/validationMiddleware';
+import { validateData } from '../../middlewares/validationMiddleware.js';
 import {
   createProductSchema,
   updateProductSchema,
-} from './../../db/productSchema';
+} from './../../db/productSchema.js';
 
-import { verifyToken, verifySeller } from '../../middlewares/authMiddleware';
+import { verifyToken, verifySeller } from '../../middlewares/authMiddleware.js';
 
 // Generate the Zod schema from your Drizzle table
 // const createProductSchema = z.object({
