@@ -16,6 +16,8 @@ import {
   updateProductSchema,
 } from './../../db/productSchema';
 
+import { verifyToken, verifySeller } from '../../middlewares/authMiddleware';
+
 // Generate the Zod schema from your Drizzle table
 // const createProductSchema = z.object({
 //   name: z.string(),
@@ -28,9 +30,20 @@ router.get('/', listProduct);
 
 router.get('/:id', getProductById);
 
-router.post('/', validateData(createProductSchema), createProduct);
+router.post(
+  '/',
+  verifyToken,
+  verifySeller,
+  validateData(createProductSchema),
+  createProduct
+);
 
-router.put('/:id', validateData(updateProductSchema), updateProduct);
+router.put(
+  '/:id',
+  verifyToken,
+  validateData(updateProductSchema),
+  updateProduct
+);
 
 router.delete('/:id', deleteProduct);
 
