@@ -1,8 +1,7 @@
-<<<<<<< HEAD
 # The name of the project.
 name: fullstack-ecommerce
-# The region where the project is deployed. Available regions: us-east-1, eu-central-1, eu-west-1
-region: us-east-1
+# The region where the project is deployed. Available regions: us-east-1, eu-central-1
+region: eu-central-1
 # The version of the Genezio YAML configuration to parse.
 yamlVersion: 2
 backend:
@@ -15,17 +14,14 @@ backend:
     # The package manager used by the backend.
     packageManager: npm
   scripts:
-    deploy:
-      - npm install && npm run build
+    deploy: npm install && npm run build
   # Information about the backend's functions.
   functions:
     # The name (label) of the function.
-    - name: ecom-expres-api-function
+    - name: ecom-express-api-function
       # The path to the function's code.
       path: ./
-      # The entry point for the function.
-      entry: app.mjs
-      # The name of the function handler.
+      # The name of the function handler
       handler: handler
-      # The compatibility of the function handler.
-      type: httpServer
+      # The entry point for the function.
+      entry: dist/src/index.js
