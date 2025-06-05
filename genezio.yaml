@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # The name of the project.
 name: fullstack-ecommerce
 # The region where the project is deployed. Available regions: us-east-1, eu-central-1, eu-west-1
@@ -28,3 +29,26 @@ backend:
       handler: handler
       # The compatibility of the function handler.
       type: httpServer
+=======
+backend:
+    functions:
+        - entry: dist/src/index.js
+          handler: handler
+          name: express
+          path: .
+          type: httpServer
+    language:
+        name: js
+        runtime: nodejs20.x
+    path: api
+    scripts:
+        deploy:
+            - npm install
+            - npm run build
+        local:
+            - npm install
+            - npm run build
+name: E-commerce
+region: us-east-1
+yamlVersion: 2
+>>>>>>> 05b4adbae9f0e4c31815a852015534ed3dd304e9
