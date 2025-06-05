@@ -1,5 +1,8 @@
 {
   "dependencies": {
-    "@types/lodash": "^4.17.17"
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.9"
   }
 }
