@@ -8,6 +8,13 @@
       "when": 1749013879497,
       "tag": "0000_burly_network",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1750163282764,
+      "tag": "0001_jazzy_wasp",
+      "breakpoints": true
     }
   ]
 }

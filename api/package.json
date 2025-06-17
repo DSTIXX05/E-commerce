@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --import=tsx --watch --env-file=.env ./src/index.ts",
+    "dev": "cross-env NODE_ENV=development node --import=tsx --watch --env-file=.env ./src/index.ts",
     "build": "tsc",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
@@ -16,6 +16,7 @@
   "description": "",
   "dependencies": {
     "bcryptjs": "^3.0.2",
+    "body-parser": "^2.2.0",
     "drizzle-orm": "^0.43.1",
     "drizzle-zod": "^0.8.1",
     "express": "^5.1.0",
@@ -35,6 +36,7 @@
     "@types/jsonwebtoken": "^9.0.9",
     "@types/lodash": "^4.17.17",
     "@types/pg": "^8.15.2",
+    "cross-env": "^7.0.3",
     "drizzle-kit": "^0.31.1"
   }
 }

@@ -14,6 +14,7 @@ const router = Router();
 
 router.post('/register', validateData(createUserSchema), async (req, res) => {
   try {
+    console.log('BODY:', req.body);
     const data = req.cleanBody;
     data.password = await bcrypt.hash(data.password, 10);
 
@@ -29,6 +30,7 @@ router.post('/register', validateData(createUserSchema), async (req, res) => {
 
 router.post('/login', validateData(loginSchema), async (req, res) => {
   try {
+    // console.log('BODY:', req.body);
     const { email, password } = req.cleanBody;
 
     const [user] = await db
@@ -51,9 +53,9 @@ router.post('/login', validateData(loginSchema), async (req, res) => {
     //create a jwt token
     const jwtSecret = process.env.JWT_SECRET;
     if (!jwtSecret) {
-      res
-        .status(500)
-        .json({ error: 'JWT secret is not defined in environment variables.' });
+      res.status(500).json({
+        error: 'JWT secret is not defined in environment variables.',
+      });
       return;
     }
     const token = jwt.sign({ userId: user.id, role: user.role }, jwtSecret, {
@@ -68,5 +70,23 @@ router.post('/login', validateData(loginSchema), async (req, res) => {
     res.status(500).send(e);
   }
 });
+
+router.post(
+  '/loginn',
+  /*validateData(loginSchema),*/ async (req, res) => {
+    console.log(req.body);
+
+    try {
+      // console.log('BODY:', req.body);
+      const { email, password } = req.body;
+      console.log('email:', email);
+      console.log('password:', password);
+
+      res.status(200).json({ email, password });
+    } catch (e) {
+      res.status(500).send(e);
+    }
+  }
+);
 
 export default router;
