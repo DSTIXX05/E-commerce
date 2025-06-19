@@ -9,6 +9,18 @@ const port = 3000;
 const app = express();
 // app.use(json());
 
+app.use((req, res, next) => {
+  if (Buffer.isBuffer(req.body)) {
+    try {
+      req.body = JSON.parse(req.body.toString());
+    } catch (e) {
+      // ignore, let validation fail
+      res.send(e);
+    }
+  }
+  next();
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 // app.use('body-parser', json());
@@ -32,17 +44,6 @@ if (process.env.NODE_ENV === 'development') {
   });
 }
 
-app.use((req, res, next) => {
-  if (Buffer.isBuffer(req.body)) {
-    try {
-      req.body = JSON.parse(req.body.toString());
-    } catch (e) {
-      // ignore, let validation fail
-      res.send(e);
-    }
-  }
-  next();
-});
 // export const handler = serverless(app);
 export const handler = serverless(app, {
   request: {
