@@ -13,6 +13,7 @@ backend:
     name: js
     # The package manager used by the backend.
     packageManager: npm
+    runtime: nodejs20.x
   scripts:
     deploy: npm install && npm run build
   # Information about the backend's functions.

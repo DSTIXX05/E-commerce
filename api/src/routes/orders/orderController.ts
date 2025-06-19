@@ -13,6 +13,8 @@ export async function createOrder(req: Request, res: Response) {
       .insert(ordersTable)
       .values({ userId: userId })
       .returning();
+    console.log(order);
+    res.status(201).json(order);
   } catch (error) {
     console.log(error);
     res.status(400).json({ message: 'invalid Order data' });
